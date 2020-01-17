@@ -1,6 +1,9 @@
 # PruebasAngular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.2.
+Lista de métodos de Jasmine para tener en cuenta
+
+https://devhints.io/jasmine
+ng test --codeCoverage=true
 
 ## Development server
 
