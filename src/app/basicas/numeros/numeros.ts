@@ -1,9 +1,13 @@
-export function incrementar(numero: number) {
 
-    if (numero > 100) {
+
+
+export function incrementar( numero: number ) {
+
+    if ( numero > 100 ) {
         return 100;
-    } else {
+    }else {
         return numero + 1;
     }
+
 
 }
