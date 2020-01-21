@@ -1,6 +1,6 @@
 import { MedicosComponent } from './medicos.component';
 import { MedicosService } from './medicos.service';
-import { from, empty } from 'rxjs';
+import { from, empty, throwError } from 'rxjs';
 
 describe('MedicosComponent', () => {
 
@@ -50,6 +50,33 @@ describe('MedicosComponent', () => {
         expect(componente.medicos.indexOf(medico)).toBeGreaterThanOrEqual(0);
     });
 
-    // TODO: Quede en el video 275: Probar errores en los observables
+    it('Guardar Médico: Si falla el guardado la propiedad mensajeError, debe ser igual al error del servicio', () => {
+        const miError = 'No se pudo agregar el médico';
+        spyOn(servicio, 'agregarMedico').and.returnValue(
+            throwError(miError)
+        );
+        componente.agregarMedico();
+        expect(componente.mensajeError).toBe(miError);
+    });
+
+    it('Borrar Médico: Debe de llamar al servidor para borrar un médico', () => {
+        spyOn(window, 'confirm')
+            .and.returnValue(true);
+        const id = '1';
+        const espia = spyOn(servicio, 'borrarMedico')
+            .and.returnValue(empty());
+        componente.borrarMedico(id);
+        expect(espia).toHaveBeenCalledWith(id);
+    });
+
+    it('Borrar Médico: No debe de llamar al servidor para borrar un médico', () => {
+        spyOn(window, 'confirm')
+            .and.returnValue(false);
+        const id = '1';
+        const espia = spyOn(servicio, 'borrarMedico')
+            .and.returnValue(empty());
+        componente.borrarMedico(id);
+        expect(espia).not.toHaveBeenCalledWith(id);
+    });
 
 });
